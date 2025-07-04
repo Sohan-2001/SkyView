@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sun, Cloud, Snowflake, Zap, CloudDrizzle } from 'lucide-react';
+import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair } from 'lucide-react';
 
 export default function Home() {
   const [location, setLocation] = useState('');
@@ -47,6 +47,28 @@ export default function Home() {
     }
   };
 
+  const handleGeoLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setSearchQuery(`${latitude},${longitude}`);
+        setLocation(''); // Clear city input field
+      },
+      (err) => {
+        setLoading(false);
+        setError(`Error: ${err.message}`);
+      }
+    );
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-4 sm:p-6 md:p-8">
       <div className="w-full max-w-lg text-center">
@@ -64,6 +86,16 @@ export default function Home() {
           />
           <Button type="submit" disabled={loading}>
             {loading ? 'Searching...' : 'Search'}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={handleGeoLocation}
+            disabled={loading}
+            aria-label="Use current location"
+          >
+            <Crosshair className="h-4 w-4" />
           </Button>
         </form>
 
