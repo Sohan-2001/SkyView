@@ -35,6 +35,14 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
       default: return 'Unknown';
     }
   };
+  
+  const getIconSrc = (iconUrl: string) => {
+    if (!iconUrl) return '';
+    if (iconUrl.startsWith('//')) {
+      return `https:${iconUrl}`;
+    }
+    return iconUrl;
+  };
 
 
   return (
@@ -68,12 +76,14 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
               <CardDescription className="text-left">{location.region}, {location.country}</CardDescription>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Image
-                src={`https:${current.condition.icon}`}
-                alt={current.condition.text}
-                width={64}
-                height={64}
-              />
+              {current.condition.icon && (
+                <Image
+                  src={getIconSrc(current.condition.icon)}
+                  alt={current.condition.text}
+                  width={64}
+                  height={64}
+                />
+              )}
               <p className="text-sm text-muted-foreground w-24">{current.condition.text}</p>
             </div>
           </div>
@@ -122,7 +132,9 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                   {forecast.forecastday.map((day, index) => (
                     <div key={index} className="flex items-center justify-between p-2 rounded-lg bg-secondary/50">
                       <div className="flex items-center gap-3">
-                        <Image src={`https:${day.day.condition.icon}`} alt={day.day.condition.text} width={40} height={40} />
+                        {day.day.condition.icon &&
+                          <Image src={getIconSrc(day.day.condition.icon)} alt={day.day.condition.text} width={40} height={40} />
+                        }
                         <div>
                           <p className="font-semibold">{format(new Date(day.date + 'T00:00:00'), 'eeee')}</p>
                           <p className="text-sm text-muted-foreground">{day.day.condition.text}</p>
