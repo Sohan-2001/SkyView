@@ -44,14 +44,6 @@ export default function Home() {
 
     fetchWeather();
   }, [searchQuery]);
-  
-  useEffect(() => {
-    if (weatherTheme) {
-      document.documentElement.setAttribute('data-theme', weatherTheme.theme);
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
-  }, [weatherTheme]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
