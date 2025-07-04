@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect, FormEvent } from 'react';
-import Image from 'next/image';
 import type { WeatherResponse, WeatherError } from '@/types/weather';
 import { getWeather } from '@/lib/weather';
-import { getWeatherTheme, type WeatherTheme } from '@/lib/weather-themes';
 import WeatherDisplay from '@/components/WeatherDisplay';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { Input } from '@/components/ui/input';
@@ -17,7 +15,6 @@ export default function Home() {
   const [location, setLocation] = useState('');
   const [searchQuery, setSearchQuery] = useState('New York');
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
-  const [weatherTheme, setWeatherTheme] = useState<WeatherTheme | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -31,12 +28,10 @@ export default function Home() {
       if (data && 'error' in data) {
         setError(data.error.message);
         setWeatherData(null);
-        setWeatherTheme(null);
       } else if (data) {
         const weatherResponse = data as WeatherResponse;
         setWeatherData(weatherResponse);
         setLocation(weatherResponse.location.name);
-        setWeatherTheme(getWeatherTheme(weatherResponse.current.condition.code, weatherResponse.current.is_day));
         setError(null);
       }
       setLoading(false);
@@ -77,26 +72,14 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen w-full transition-colors duration-500">
-      {weatherTheme && (
-        <Image 
-          src={weatherTheme.image} 
-          alt="Weather background" 
-          fill
-          style={{objectFit: "cover"}}
-          className="z-0 transition-opacity duration-1000"
-          data-ai-hint={weatherTheme.aiHint}
-        />
-      )}
-      <div className="absolute inset-0 bg-black/20 z-1"></div>
-
-      <main className="relative z-10 flex min-h-screen flex-col items-center justify-start p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen w-full">
+      <main className="flex min-h-screen flex-col items-center justify-start p-4 sm:p-6 md:p-8">
         <div className="absolute top-4 right-4">
           <ThemeSwitcher />
         </div>
         <div className="w-full max-w-lg text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold font-headline text-white drop-shadow-lg mb-2">SkyView</h1>
-          <p className="text-lg text-white/90 drop-shadow-md mb-8">Your personal weather station</p>
+          <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2">SkyView</h1>
+          <p className="text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
 
           <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
             <Input
@@ -104,7 +87,7 @@ export default function Home() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Enter city name..."
-              className="flex-grow bg-background/80 border-white/50 focus:bg-background/90"
+              className="flex-grow"
               aria-label="City Name"
             />
             <Button type="submit" disabled={loading}>
@@ -125,13 +108,13 @@ export default function Home() {
           {loading && (
             <div className="w-full max-w-lg">
               <div className="w-full max-w-lg animate-pulse">
-                <Skeleton className="h-[320px] w-full rounded-lg bg-white/20" />
+                <Skeleton className="h-[320px] w-full rounded-lg" />
               </div>
             </div>
           )}
 
           {error && !loading && (
-            <Alert variant="destructive" className="text-left animate-in fade-in-0 duration-500 bg-destructive/80 border-destructive-foreground/50 text-destructive-foreground">
+            <Alert variant="destructive" className="text-left animate-in fade-in-0 duration-500">
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
@@ -140,9 +123,9 @@ export default function Home() {
           {weatherData && !loading && <WeatherDisplay data={weatherData} />}
 
           {!loading && !error && !weatherData && (
-             <div className="text-center text-white/80 mt-16 animate-in fade-in-50 duration-500">
+             <div className="text-center text-foreground/80 mt-16 animate-in fade-in-50 duration-500">
                <p className="mb-4 drop-shadow-md">Enter a city to get the latest weather forecast.</p>
-               <div className="flex justify-center gap-4 text-white drop-shadow-lg">
+               <div className="flex justify-center gap-4 text-foreground drop-shadow-lg">
                   <Sun size={32} />
                   <Cloud size={32} />
                   <CloudDrizzle size={32} />
