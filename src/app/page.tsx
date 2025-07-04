@@ -10,6 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+type ApiProvider = 'weatherapi' | 'openweathermap';
 
 export default function Home() {
   const [location, setLocation] = useState('');
@@ -17,13 +20,14 @@ export default function Home() {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [apiProvider, setApiProvider] = useState<ApiProvider>('weatherapi');
 
   useEffect(() => {
     const fetchWeather = async () => {
       if (!searchQuery) return;
       setLoading(true);
       setError(null);
-      const data = await getWeather(searchQuery);
+      const data = await getWeather(searchQuery, apiProvider);
 
       if (data && 'error' in data) {
         setError(data.error.message);
@@ -38,7 +42,7 @@ export default function Home() {
     };
 
     fetchWeather();
-  }, [searchQuery]);
+  }, [searchQuery, apiProvider]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -80,6 +84,20 @@ export default function Home() {
         <div className="w-full max-w-lg text-center">
           <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2">SkyView</h1>
           <p className="text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
+          
+          <div className="flex gap-2 mb-4">
+             <Select value={apiProvider} onValueChange={(value) => setApiProvider(value as ApiProvider)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Provider" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weatherapi">WeatherAPI</SelectItem>
+                <SelectItem value="openweathermap">OpenWeatherMap</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className='flex-grow' />
+          </div>
+
 
           <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
             <Input
