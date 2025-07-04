@@ -1,5 +1,5 @@
 import type { WeatherResponse, WeatherError } from '@/types/weather';
-import type { GeoResponse, OneCallResponse, AirPollutionResponse } from '@/types/openweathermap';
+import type { GeoResponse, GeoInfo, OneCallResponse, AirPollutionResponse } from '@/types/openweathermap';
 import { adaptOpenWeatherData } from './weatherAdapter';
 
 const WEATHERAPI_API_KEY = '3f2f4f2c696d4f5e9d454009240204';
@@ -31,34 +31,61 @@ async function getOpenWeatherData(
   city: string,
 ): Promise<WeatherResponse | WeatherError> {
   try {
-    // 1. Geocode city to get lat/lon
-    const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${OPENWEATHER_API_KEY}`;
-    const geoResponse = await fetch(geoUrl);
-    const geoData: GeoResponse = await geoResponse.json();
+    let lat: number;
+    let lon: number;
+    let geoInfo: GeoInfo;
 
-    if (!geoResponse.ok || geoData.length === 0) {
-      return { error: { code: 404, message: `Could not find location: ${city}` }};
+    const latLonRegex = /^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/;
+
+    // Step 1: Determine Lat/Lon and GeoInfo from the input string
+    if (latLonRegex.test(city)) {
+      // Input is coordinates, use reverse geocoding
+      const [latStr, lonStr] = city.split(',');
+      lat = parseFloat(latStr);
+      lon = parseFloat(lonStr);
+      
+      const reverseGeoUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${OPENWEATHER_API_KEY}`;
+      const reverseGeoResponse = await fetch(reverseGeoUrl);
+      const reverseGeoData = await reverseGeoResponse.json();
+
+      if (!reverseGeoResponse.ok || reverseGeoData.length === 0) {
+        return { error: { code: 404, message: `Could not find location information for coordinates: ${city}` }};
+      }
+      geoInfo = reverseGeoData[0];
+    } else {
+      // Input is a city name, use direct geocoding
+      const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${OPENWEATHER_API_KEY}`;
+      const geoResponse = await fetch(geoUrl);
+      const geoData = await geoResponse.json();
+
+      if (!geoResponse.ok || geoData.length === 0) {
+        return { error: { code: 404, message: `Could not find location: ${city}` }};
+      }
+      geoInfo = geoData[0];
+      lat = geoInfo.lat;
+      lon = geoInfo.lon;
     }
-    const { lat, lon } = geoData[0];
 
-    // 2. Fetch weather data using One Call API
+    // Step 2: Fetch weather data using the determined lat/lon
     const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${OPENWEATHER_API_KEY}&units=metric`;
     const weatherResponse = await fetch(weatherUrl);
-    const weatherData: OneCallResponse = await weatherResponse.json();
-     if (!weatherResponse.ok) {
-      return { error: { code: weatherResponse.status, message: 'Failed to fetch weather data from OpenWeatherMap.' }};
-    }
+    const weatherData = await weatherResponse.json();
 
-    // 3. Fetch air quality data
+    if (!weatherResponse.ok) {
+      const message = weatherData?.message || 'Failed to fetch weather data from OpenWeatherMap.';
+      return { error: { code: weatherResponse.status, message }};
+    }
+    
+    // Step 3: Fetch air quality data
     const airUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}`;
     const airResponse = await fetch(airUrl);
-    const airData: AirPollutionResponse = await airResponse.json();
-     if (!airResponse.ok) {
+    const airData = await airResponse.json();
+    if (!airResponse.ok) {
       return { error: { code: airResponse.status, message: 'Failed to fetch air quality data from OpenWeatherMap.' }};
     }
 
-    // 4. Adapt data to our internal format
-    return adaptOpenWeatherData(geoData[0], weatherData, airData);
+    // Step 4: Adapt all fetched data to our internal format
+    return adaptOpenWeatherData(geoInfo, weatherData, airData);
 
   } catch (error) {
      return {
