@@ -41,7 +41,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
     <div className="animate-in fade-in-0 duration-500 w-full max-w-lg">
       {alerts.alert.length > 0 && (
         <Accordion type="single" collapsible className="w-full mb-4">
-          <AccordionItem value="item-1" className="border-destructive/50 rounded-lg border">
+          <AccordionItem value="item-1" className="border-destructive/50 rounded-lg border bg-card/80 backdrop-blur-sm">
             <AccordionTrigger className="p-4 hover:no-underline">
               <div className="flex items-center gap-2 text-destructive">
                 <AlertTriangle className="h-5 w-5" />
@@ -60,7 +60,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
         </Accordion>
       )}
 
-      <Card className="w-full max-w-lg">
+      <Card className="w-full max-w-lg bg-card/80 backdrop-blur-sm border-white/20">
         <CardHeader>
           <div className="flex justify-between items-start">
             <div>
@@ -82,7 +82,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
           <div className="text-6xl font-bold mb-6 text-primary text-left">{Math.round(current.temp_c)}°C</div>
 
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-3 bg-background/60">
               <TabsTrigger value="details">Details</TabsTrigger>
               <TabsTrigger value="forecast">Forecast</TabsTrigger>
               <TabsTrigger value="air-quality">Air Quality</TabsTrigger>

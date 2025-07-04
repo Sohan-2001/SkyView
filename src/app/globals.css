@@ -76,6 +76,73 @@ body {
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Dynamic Weather Themes */
+  [data-theme="sunny"] {
+    --primary: 45 90% 55%;
+    --accent: 35 100% 65%;
+    --ring: 45 90% 55%;
+  }
+  .dark[data-theme="sunny"] {
+    --primary: 45 80% 60%;
+    --accent: 35 90% 70%;
+    --ring: 45 80% 60%;
+  }
+
+  [data-theme="cloudy"] {
+    --primary: 210 20% 55%;
+    --accent: 210 30% 75%;
+    --ring: 210 20% 55%;
+  }
+  .dark[data-theme="cloudy"] {
+    --primary: 210 25% 65%;
+    --accent: 210 35% 80%;
+    --ring: 210 25% 65%;
+  }
+  
+  [data-theme="rainy"] {
+    --primary: 220 50% 50%;
+    --accent: 210 60% 70%;
+    --ring: 220 50% 50%;
+  }
+  .dark[data-theme="rainy"] {
+    --primary: 220 50% 60%;
+    --accent: 210 60% 75%;
+    --ring: 220 50% 60%;
+  }
+
+  [data-theme="snowy"] {
+    --primary: 190 60% 60%;
+    --accent: 200 80% 90%;
+    --ring: 190 60% 60%;
+  }
+  .dark[data-theme="snowy"] {
+    --primary: 190 50% 70%;
+    --accent: 200 70% 85%;
+    --ring: 190 50% 70%;
+  }
+
+  [data-theme="thunder"] {
+    --primary: 260 50% 50%;
+    --accent: 50 100% 60%;
+    --ring: 260 50% 50%;
+  }
+  .dark[data-theme="thunder"] {
+    --primary: 260 45% 60%;
+    --accent: 50 90% 65%;
+    --ring: 260 45% 60%;
+  }
+
+  [data-theme="fog"] {
+    --primary: 200 10% 60%;
+    --accent: 200 5% 75%;
+    --ring: 200 10% 60%;
+  }
+  .dark[data-theme="fog"] {
+    --primary: 200 12% 70%;
+    --accent: 200 8% 80%;
+    --ring: 200 12% 70%;
+  }
 }
 
 @layer base {
