@@ -6,7 +6,7 @@ const WEATHERAPI_API_KEY = '3f2f4f2c696d4f5e9d454009240204';
 const WEATHERAPI_URL = 'https://api.weatherapi.com/v1/forecast.json';
 
 const WEATHERSTACK_API_KEY = '249dacc041049d7e001b18c6c3586752';
-const WEATHERSTACK_URL = 'http://api.weatherstack.com/current';
+const WEATHERSTACK_URL = 'https://api.weatherstack.com/current';
 
 async function getWeatherApiData(
   city: string
