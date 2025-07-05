@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, FormEvent } from 'react';
@@ -24,12 +25,21 @@ type ApiProvider = 'weatherapi' | 'weatherstack' | 'openweathermap';
 
 export default function Home() {
   const [location, setLocation] = useState('');
-  const [searchQuery, setSearchQuery] = useState('New York');
+  const [searchQuery, setSearchQuery] = useState('');
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [apiProvider, setApiProvider] = useState<ApiProvider>('weatherapi');
   const [geoError, setGeoError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cachedLocation = localStorage.getItem('skyview-location');
+    if (cachedLocation) {
+      setSearchQuery(cachedLocation);
+    } else {
+      setSearchQuery('New York'); // Default location if no cache
+    }
+  }, []);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -49,17 +59,23 @@ export default function Home() {
         setWeatherData(weatherResponse);
         setLocation(weatherResponse.location.name);
         setError(null);
+        localStorage.setItem('skyview-location', searchQuery);
       }
       setLoading(false);
     };
 
-    fetchWeather();
+    if (searchQuery) {
+      fetchWeather();
+    }
   }, [searchQuery, apiProvider]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (location.trim()) {
-      setSearchQuery(location);
+    const newLocation = location.trim();
+    if (newLocation) {
+      if (newLocation.toLowerCase() !== searchQuery.toLowerCase()) {
+        setSearchQuery(newLocation);
+      }
     } else {
       setError("Please enter a city name.");
     }
@@ -79,7 +95,14 @@ export default function Home() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setSearchQuery(`${latitude},${longitude}`);
+        const newQuery = `${latitude},${longitude}`;
+        const cachedLocation = localStorage.getItem('skyview-location');
+        
+        if (newQuery !== cachedLocation) {
+          setSearchQuery(newQuery);
+        } else {
+          setLoading(false); // Already showing weather for this location
+        }
       },
       (err) => {
         setGeoError(`Failed to get location: ${err.message}. Please ensure location services are enabled for your browser.`);
