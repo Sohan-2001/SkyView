@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-background">
-      <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 md:p-12 pb-24">
+      <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8 pb-24">
         <div className="absolute top-4 right-4">
           <ThemeSwitcher />
         </div>
@@ -86,7 +86,7 @@ export default function Home() {
               <CloudSun className="w-12 h-12" />
               SkyView
             </h1>
-            <p className="text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
+            <p className="text-base sm:text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-2 mb-8">

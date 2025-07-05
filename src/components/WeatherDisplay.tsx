@@ -70,11 +70,11 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1 p-6 rounded-lg bg-card text-card-foreground flex flex-col justify-between">
           <div>
-            <h2 className="text-3xl font-bold">{location.name}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">{location.name}</h2>
             <p className="text-muted-foreground">{location.region}, {location.country}</p>
           </div>
           <div className="my-8">
-            <p className="text-8xl font-bold text-primary">{Math.round(current.temp_c)}°C</p>
+            <p className="text-7xl sm:text-8xl font-bold text-primary">{Math.round(current.temp_c)}°C</p>
           </div>
           <div className="flex items-center gap-4">
              {current.condition.icon && (
@@ -85,7 +85,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                   height={64}
                 />
               )}
-            <p className="text-xl text-muted-foreground">{current.condition.text}</p>
+            <p className="text-lg sm:text-xl text-muted-foreground">{current.condition.text}</p>
           </div>
         </div>
 
@@ -104,42 +104,42 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                     <Thermometer className="w-6 h-6 text-accent" />
                     <div>
                       <p className="text-muted-foreground text-sm">Feels like</p>
-                      <p className="font-bold text-lg">{Math.round(current.feelslike_c)}°C</p>
+                      <p className="font-bold text-base sm:text-lg">{Math.round(current.feelslike_c)}°C</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Droplets className="w-6 h-6 text-accent" />
                     <div>
                       <p className="text-muted-foreground text-sm">Humidity</p>
-                      <p className="font-bold text-lg">{current.humidity}%</p>
+                      <p className="font-bold text-base sm:text-lg">{current.humidity}%</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Wind className="w-6 h-6 text-accent" />
                     <div>
                       <p className="text-muted-foreground text-sm">Wind</p>
-                      <p className="font-bold text-lg">{current.wind_kph} km/h</p>
+                      <p className="font-bold text-base sm:text-lg">{current.wind_kph} km/h</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Gauge className="w-6 h-6 text-accent" />
                     <div>
                       <p className="text-muted-foreground text-sm">Pressure</p>
-                      <p className="font-bold text-lg">{current.pressure_mb} mb</p>
+                      <p className="font-bold text-base sm:text-lg">{current.pressure_mb} mb</p>
                     </div>
                   </div>
                    <div className="flex items-center gap-3">
                     <Eye className="w-6 h-6 text-accent" />
                      <div>
                       <p className="text-muted-foreground text-sm">Visibility</p>
-                      <p className="font-bold text-lg">{current.vis_km} km</p>
+                      <p className="font-bold text-base sm:text-lg">{current.vis_km} km</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <CloudSun className="w-6 h-6 text-accent" />
                     <div>
                       <p className="text-muted-foreground text-sm">UV Index</p>
-                      <p className="font-bold text-lg">{current.uv}</p>
+                      <p className="font-bold text-base sm:text-lg">{current.uv}</p>
                     </div>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                           {day.day.condition.icon &&
                             <Image src={getIconSrc(day.day.condition.icon)} alt={day.day.condition.text} width={48} height={48} />
                           }
-                          <div className="w-32">
+                          <div className="w-24 sm:w-32">
                             <p className="font-semibold text-base">{format(new Date(day.date + 'T00:00:00'), 'eeee')}</p>
                             <p className="text-sm text-muted-foreground truncate">{day.day.condition.text}</p>
                           </div>
@@ -163,8 +163,8 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                                 <div className="flex items-center gap-1.5"><Sunrise size={16}/> {day.astro.sunrise.replace(/^0/, '')}</div>
                                 <div className="flex items-center gap-1.5"><Sunset size={16}/> {day.astro.sunset.replace(/^0/, '')}</div>
                             </div>
-                            <div className="text-right w-20">
-                                <p className="font-bold text-lg">{Math.round(day.day.maxtemp_c)}° / {Math.round(day.day.mintemp_c)}°</p>
+                            <div className="text-right w-24">
+                                <p className="font-bold text-base sm:text-lg">{Math.round(day.day.maxtemp_c)}° / {Math.round(day.day.mintemp_c)}°</p>
                             </div>
                         </div>
                       </div>
@@ -177,32 +177,32 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                   <div>
                     <div className="flex items-center gap-2 mb-6">
                       <Leaf className="w-6 h-6 text-accent" />
-                      <span className="font-semibold text-lg">US EPA Index: {air_quality['us-epa-index']} ({getAqiDescription(air_quality['us-epa-index'])})</span>
+                      <span className="font-semibold text-base sm:text-lg">US EPA Index: {air_quality['us-epa-index']} ({getAqiDescription(air_quality['us-epa-index'])})</span>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6">
                       <div className="flex items-center gap-3">
                          <p className="font-mono text-accent text-lg">CO</p>
-                         <p className="font-bold text-lg">{air_quality.co.toFixed(1)}</p>
+                         <p className="font-bold text-base sm:text-lg">{air_quality.co.toFixed(1)}</p>
                       </div>
                        <div className="flex items-center gap-3">
                          <p className="font-mono text-accent text-lg">NO₂</p>
-                         <p className="font-bold text-lg">{air_quality.no2.toFixed(1)}</p>
+                         <p className="font-bold text-base sm:text-lg">{air_quality.no2.toFixed(1)}</p>
                       </div>
                        <div className="flex items-center gap-3">
                          <p className="font-mono text-accent text-lg">O₃</p>
-                         <p className="font-bold text-lg">{air_quality.o3.toFixed(1)}</p>
+                         <p className="font-bold text-base sm:text-lg">{air_quality.o3.toFixed(1)}</p>
                       </div>
                        <div className="flex items-center gap-3">
                          <p className="font-mono text-accent text-lg">SO₂</p>
-                         <p className="font-bold text-lg">{air_quality.so2.toFixed(1)}</p>
+                         <p className="font-bold text-base sm:text-lg">{air_quality.so2.toFixed(1)}</p>
                       </div>
                        <div className="flex items-center gap-3">
                          <p className="font-mono text-accent text-lg">PM2.5</p>
-                         <p className="font-bold text-lg">{air_quality.pm2_5.toFixed(1)}</p>
+                         <p className="font-bold text-base sm:text-lg">{air_quality.pm2_5.toFixed(1)}</p>
                       </div>
                        <div className="flex items-center gap-3">
                          <p className="font-mono text-accent text-lg">PM10</p>
-                         <p className="font-bold text-lg">{air_quality.pm10.toFixed(1)}</p>
+                         <p className="font-bold text-base sm:text-lg">{air_quality.pm10.toFixed(1)}</p>
                       </div>
                     </div>
                   </div>
