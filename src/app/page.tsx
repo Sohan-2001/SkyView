@@ -9,8 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair, CloudSun } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair, CloudSun, Layers, Cloudy } from 'lucide-react';
 
 type ApiProvider = 'weatherapi' | 'weatherstack' | 'openweathermap';
 
@@ -77,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-background">
-      <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 md:p-12">
+      <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 md:p-12 pb-24">
         <div className="absolute top-4 right-4">
           <ThemeSwitcher />
         </div>
@@ -91,17 +90,7 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-2 mb-8">
-            <Select value={apiProvider} onValueChange={(value) => setApiProvider(value as ApiProvider)}>
-              <SelectTrigger className="w-full sm:w-[180px] flex-shrink-0">
-                <SelectValue placeholder="Select Provider" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="weatherapi">WeatherAPI</SelectItem>
-                <SelectItem value="weatherstack">Weatherstack</SelectItem>
-                <SelectItem value="openweathermap">OpenWeatherMap</SelectItem>
-              </SelectContent>
-            </Select>
-            <form onSubmit={handleSubmit} className="flex-grow flex gap-2">
+            <form onSubmit={handleSubmit} className="flex-grow flex gap-2 w-full">
               <Input
                 type="text"
                 value={location}
@@ -175,6 +164,34 @@ export default function Home() {
           )}
         </div>
       </main>
+      <div className="fixed bottom-0 left-0 right-0 w-full border-t bg-background/95 backdrop-blur-sm">
+        <div className="flex justify-around items-center max-w-xl mx-auto p-2">
+            <Button
+              variant={apiProvider === 'weatherapi' ? 'secondary' : 'ghost'}
+              className="flex flex-col h-auto p-2 rounded-md"
+              onClick={() => setApiProvider('weatherapi')}
+            >
+              <CloudSun className="w-6 h-6 mb-1" />
+              <span className="text-xs font-semibold">WeatherAPI</span>
+            </Button>
+            <Button
+              variant={apiProvider === 'weatherstack' ? 'secondary' : 'ghost'}
+              className="flex flex-col h-auto p-2 rounded-md"
+              onClick={() => setApiProvider('weatherstack')}
+            >
+              <Layers className="w-6 h-6 mb-1" />
+              <span className="text-xs font-semibold">Weatherstack</span>
+            </Button>
+            <Button
+              variant={apiProvider === 'openweathermap' ? 'secondary' : 'ghost'}
+              className="flex flex-col h-auto p-2 rounded-md"
+              onClick={() => setApiProvider('openweathermap')}
+            >
+              <Cloudy className="w-6 h-6 mb-1" />
+              <span className="text-xs font-semibold">OpenWeatherMap</span>
+            </Button>
+        </div>
+      </div>
     </div>
   );
 }
