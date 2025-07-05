@@ -68,13 +68,13 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-1 p-6 rounded-lg bg-card text-card-foreground flex flex-col justify-between">
+        <div className="md:col-span-1 flex flex-col justify-between p-6 rounded-lg bg-card/50 h-[400px]">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold">{location.name}</h2>
             <p className="text-muted-foreground">{location.region}, {location.country}</p>
           </div>
           <div className="my-8">
-            <p className="text-7xl sm:text-8xl font-bold text-primary">{Math.round(current.temp_c)}°C</p>
+            <p className="text-6xl sm:text-7xl md:text-6xl lg:text-8xl font-bold text-primary">{Math.round(current.temp_c)}°C</p>
           </div>
           <div className="flex items-center gap-4">
              {current.condition.icon && (
@@ -89,7 +89,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
           </div>
         </div>
 
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 space-y-6">
             <Tabs defaultValue="details" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="details">Details</TabsTrigger>
@@ -97,7 +97,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
               <TabsTrigger value="air-quality">Air Quality</TabsTrigger>
             </TabsList>
             
-            <div className="mt-6 p-6 rounded-lg bg-card text-card-foreground">
+            <div className="p-6 rounded-lg bg-card/50">
               <TabsContent value="details" className="mt-0">
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
                   <div className="flex items-center gap-3">
