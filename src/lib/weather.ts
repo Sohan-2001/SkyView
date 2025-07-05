@@ -3,13 +3,13 @@ import type { WeatherstackResponse, WeatherstackError } from '@/types/weathersta
 import type { OpenWeatherMapCurrent, OpenWeatherMapForecast, OpenWeatherMapAirPollution, GeocodingResponse, OpenWeatherError } from '@/types/openweathermap';
 import { adaptWeatherStackData, adaptOpenWeatherMapData } from './weatherAdapter';
 
-const WEATHERAPI_API_KEY = '3f2f4f2c696d4f5e9d454009240204';
+const WEATHERAPI_API_KEY = process.env.NEXT_PUBLIC_WEATHERAPI_API_KEY;
 const WEATHERAPI_URL = 'https://api.weatherapi.com/v1/forecast.json';
 
-const WEATHERSTACK_API_KEY = '249dacc041049d7e001b18c6c3586752';
+const WEATHERSTACK_API_KEY = process.env.NEXT_PUBLIC_WEATHERSTACK_API_KEY;
 const WEATHERSTACK_URL = 'https://api.weatherstack.com/current';
 
-const OPENWEATHERMAP_API_KEY = '53cd714a46de15e92f75e3948e4a93a5';
+const OPENWEATHERMAP_API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
 const OPENWEATHERMAP_GEO_URL = 'https://api.openweathermap.org/geo/1.0/direct';
 const OPENWEATHERMAP_REVERSE_GEO_URL = 'https://api.openweathermap.org/geo/1.0/reverse';
 const OPENWEATHERMAP_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather';
