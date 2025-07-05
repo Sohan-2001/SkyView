@@ -76,18 +76,20 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full">
-      <main className="flex min-h-screen flex-col items-center justify-start p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen w-full bg-background">
+      <main className="flex min-h-screen flex-col items-center p-4 sm:p-8 md:p-12">
         <div className="absolute top-4 right-4">
           <ThemeSwitcher />
         </div>
-        <div className="w-full max-w-lg text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2">SkyView</h1>
-          <p className="text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
+        <div className="w-full max-w-6xl">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2">SkyView</h1>
+            <p className="text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
+          </div>
           
-          <div className="flex gap-2 mb-4">
-             <Select value={apiProvider} onValueChange={(value) => setApiProvider(value as ApiProvider)}>
-              <SelectTrigger className="w-[180px]">
+          <div className="flex flex-col sm:flex-row gap-2 mb-8">
+            <Select value={apiProvider} onValueChange={(value) => setApiProvider(value as ApiProvider)}>
+              <SelectTrigger className="w-full sm:w-[180px] flex-shrink-0">
                 <SelectValue placeholder="Select Provider" />
               </SelectTrigger>
               <SelectContent>
@@ -96,38 +98,53 @@ export default function Home() {
                 <SelectItem value="openweathermap">OpenWeatherMap</SelectItem>
               </SelectContent>
             </Select>
-            <div className='flex-grow' />
+            <form onSubmit={handleSubmit} className="flex-grow flex gap-2">
+              <Input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter city name..."
+                className="flex-grow"
+                aria-label="City Name"
+              />
+              <Button type="submit" disabled={loading}>
+                {loading ? 'Searching...' : 'Search'}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={handleGeoLocation}
+                disabled={loading}
+                aria-label="Use current location"
+              >
+                <Crosshair className="h-4 w-4" />
+              </Button>
+            </form>
           </div>
 
-
-          <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
-            <Input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter city name..."
-              className="flex-grow"
-              aria-label="City Name"
-            />
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Searching...' : 'Search'}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              onClick={handleGeoLocation}
-              disabled={loading}
-              aria-label="Use current location"
-            >
-              <Crosshair className="h-4 w-4" />
-            </Button>
-          </form>
-
           {loading && (
-            <div className="w-full max-w-lg">
-              <div className="w-full max-w-lg animate-pulse">
-                <Skeleton className="h-[320px] w-full rounded-lg" />
+             <div className="w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="md:col-span-1 flex flex-col justify-between p-6 rounded-lg bg-card/50 h-[400px]">
+                      <div className="space-y-4">
+                          <Skeleton className="h-10 w-3/4 rounded-md" />
+                          <Skeleton className="h-6 w-1/2 rounded-md" />
+                      </div>
+                       <div className="space-y-4 my-8">
+                          <Skeleton className="h-24 w-3/4 rounded-md" />
+                      </div>
+                       <div className="flex items-center gap-4">
+                          <Skeleton className="h-16 w-16 rounded-full" />
+                          <Skeleton className="h-8 w-2/4 rounded-md" />
+                      </div>
+                  </div>
+                  <div className="md:col-span-2 space-y-6">
+                      <Skeleton className="h-10 w-full rounded-md" />
+                      <div className="p-6 rounded-lg bg-card/50">
+                          <Skeleton className="h-48 w-full rounded-md" />
+                      </div>
+                  </div>
               </div>
             </div>
           )}
