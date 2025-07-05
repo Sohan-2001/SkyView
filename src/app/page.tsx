@@ -12,7 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type ApiProvider = 'weatherapi' | 'weatherstack';
+type ApiProvider = 'weatherapi' | 'weatherstack' | 'openweathermap';
 
 export default function Home() {
   const [location, setLocation] = useState('');
@@ -93,6 +93,7 @@ export default function Home() {
               <SelectContent>
                 <SelectItem value="weatherapi">WeatherAPI</SelectItem>
                 <SelectItem value="weatherstack">Weatherstack</SelectItem>
+                <SelectItem value="openweathermap">OpenWeatherMap</SelectItem>
               </SelectContent>
             </Select>
             <div className='flex-grow' />
