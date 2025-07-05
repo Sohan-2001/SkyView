@@ -23,7 +23,10 @@ export default function Home() {
 
   useEffect(() => {
     const fetchWeather = async () => {
-      if (!searchQuery) return;
+      if (!searchQuery) {
+        setLoading(false);
+        return;
+      };
       setLoading(true);
       setError(null);
       const data = await getWeather(searchQuery, apiProvider);
@@ -53,12 +56,13 @@ export default function Home() {
   };
 
   const handleGeoLocation = () => {
+    if (loading) return;
+    
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
       return;
     }
 
-    setLoading(true);
     setError(null);
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -66,7 +70,6 @@ export default function Home() {
         setSearchQuery(`${latitude},${longitude}`);
       },
       (err) => {
-        setLoading(false);
         setError(`Error: ${err.message}`);
       }
     );
