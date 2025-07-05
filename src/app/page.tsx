@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full bg-background">
       <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8 pb-24">
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-50">
           <ThemeSwitcher />
         </div>
         <div className="w-full max-w-6xl">
@@ -164,7 +164,7 @@ export default function Home() {
           )}
         </div>
       </main>
-      <div className="fixed bottom-0 left-0 right-0 w-full border-t bg-background/95 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 w-full border-t bg-background/95 backdrop-blur-sm z-50">
         <div className="flex justify-around items-center max-w-xl mx-auto p-2">
             <Button
               variant={apiProvider === 'weatherapi' ? 'secondary' : 'ghost'}
