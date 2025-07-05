@@ -10,6 +10,15 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair, CloudSun, Layers, Cloudy } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type ApiProvider = 'weatherapi' | 'weatherstack' | 'openweathermap';
 
@@ -20,6 +29,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [apiProvider, setApiProvider] = useState<ApiProvider>('weatherapi');
+  const [geoError, setGeoError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -59,18 +69,21 @@ export default function Home() {
     if (loading) return;
     
     if (!navigator.geolocation) {
-      setError("Geolocation is not supported by your browser.");
+      setGeoError("Geolocation is not supported by your browser.");
       return;
     }
 
+    setLoading(true);
     setError(null);
+    
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         setSearchQuery(`${latitude},${longitude}`);
       },
       (err) => {
-        setError(`Error: ${err.message}`);
+        setGeoError(`Failed to get location: ${err.message}. Please ensure location services are enabled for your browser.`);
+        setLoading(false);
       }
     );
   };
@@ -116,6 +129,20 @@ export default function Home() {
               </Button>
             </form>
           </div>
+
+          <AlertDialog open={!!geoError} onOpenChange={() => setGeoError(null)}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Location Error</AlertDialogTitle>
+                <AlertDialogDescription>
+                  {geoError}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction onClick={() => setGeoError(null)}>OK</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
           {loading && (
              <div className="w-full">
