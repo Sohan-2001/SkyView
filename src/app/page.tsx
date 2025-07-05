@@ -75,7 +75,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-background">
+    <div className="min-h-screen w-full">
       <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8 pb-24">
         <div className="absolute top-4 right-4 z-50">
           <ThemeSwitcher />
@@ -89,17 +89,17 @@ export default function Home() {
             <p className="text-base sm:text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-2 mb-8">
+          <div className="bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-2xl p-4 mb-8 shadow-lg">
             <form onSubmit={handleSubmit} className="flex-grow flex gap-2 w-full">
               <Input
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Enter city name..."
-                className="flex-grow"
+                className="flex-grow bg-transparent border-white/30 placeholder:text-foreground/60 focus:ring-offset-0 focus:border-white/80"
                 aria-label="City Name"
               />
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={loading} variant="secondary">
                 {loading ? 'Searching...' : 'Search'}
               </Button>
               <Button
@@ -109,6 +109,7 @@ export default function Home() {
                 onClick={handleGeoLocation}
                 disabled={loading}
                 aria-label="Use current location"
+                className="bg-transparent border-white/30"
               >
                 <Crosshair className="h-4 w-4" />
               </Button>
@@ -118,23 +119,23 @@ export default function Home() {
           {loading && (
              <div className="w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="md:col-span-1 flex flex-col gap-8 p-6 rounded-lg bg-card/50">
+                  <div className="md:col-span-1 flex flex-col gap-4 p-6 bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-3xl shadow-lg">
                       <div className="space-y-4">
-                          <Skeleton className="h-10 w-3/4 rounded-md" />
-                          <Skeleton className="h-6 w-1/2 rounded-md" />
+                          <Skeleton className="h-10 w-3/4 rounded-md bg-white/20" />
+                          <Skeleton className="h-6 w-1/2 rounded-md bg-white/20" />
                       </div>
                        <div className="space-y-4">
-                          <Skeleton className="h-24 w-3/4 rounded-md" />
+                          <Skeleton className="h-24 w-3/4 rounded-md bg-white/20" />
                       </div>
                        <div className="flex items-center gap-4">
-                          <Skeleton className="h-16 w-16 rounded-full" />
-                          <Skeleton className="h-8 w-2/4 rounded-md" />
+                          <Skeleton className="h-16 w-16 rounded-full bg-white/20" />
+                          <Skeleton className="h-8 w-2/4 rounded-md bg-white/20" />
                       </div>
                   </div>
-                  <div className="md:col-span-2 space-y-6">
-                      <Skeleton className="h-10 w-full rounded-md" />
-                      <div className="p-6 rounded-lg bg-card/50">
-                          <Skeleton className="h-48 w-full rounded-md" />
+                  <div className="md:col-span-2 space-y-6 bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-3xl shadow-lg p-6">
+                      <Skeleton className="h-10 w-full rounded-md bg-white/20" />
+                      <div className="rounded-lg">
+                          <Skeleton className="h-48 w-full rounded-md bg-white/20" />
                       </div>
                   </div>
               </div>
@@ -142,7 +143,7 @@ export default function Home() {
           )}
 
           {error && !loading && (
-            <Alert variant="destructive" className="text-left animate-in fade-in-0 duration-500">
+            <Alert variant="destructive" className="text-left animate-in fade-in-0 duration-500 bg-destructive/20 backdrop-blur-lg border-destructive">
               <AlertTitle>Error</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
@@ -164,11 +165,11 @@ export default function Home() {
           )}
         </div>
       </main>
-      <div className="fixed bottom-0 left-0 right-0 w-full border-t bg-background/95 backdrop-blur-sm z-50">
+      <div className="fixed bottom-0 left-0 right-0 w-full border-t border-white/20 bg-background/30 backdrop-blur-xl z-50">
         <div className="flex justify-around items-center max-w-xl mx-auto p-2">
             <Button
               variant={apiProvider === 'weatherapi' ? 'secondary' : 'ghost'}
-              className="flex flex-col h-auto p-2 rounded-md"
+              className="flex flex-col h-auto p-2 rounded-lg"
               onClick={() => setApiProvider('weatherapi')}
             >
               <CloudSun className="w-6 h-6 mb-1" />
@@ -176,7 +177,7 @@ export default function Home() {
             </Button>
             <Button
               variant={apiProvider === 'weatherstack' ? 'secondary' : 'ghost'}
-              className="flex flex-col h-auto p-2 rounded-md"
+              className="flex flex-col h-auto p-2 rounded-lg"
               onClick={() => setApiProvider('weatherstack')}
             >
               <Layers className="w-6 h-6 mb-1" />
@@ -184,7 +185,7 @@ export default function Home() {
             </Button>
             <Button
               variant={apiProvider === 'openweathermap' ? 'secondary' : 'ghost'}
-              className="flex flex-col h-auto p-2 rounded-md"
+              className="flex flex-col h-auto p-2 rounded-lg"
               onClick={() => setApiProvider('openweathermap')}
             >
               <Cloudy className="w-6 h-6 mb-1" />

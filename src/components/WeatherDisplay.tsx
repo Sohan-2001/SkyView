@@ -48,7 +48,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
     <div className="animate-in fade-in-0 duration-500 w-full text-left">
       {alerts.alert.length > 0 && (
         <Accordion type="single" collapsible className="w-full mb-8">
-          <AccordionItem value="item-1" className="border-destructive/50 rounded-lg border bg-destructive/10">
+          <AccordionItem value="item-1" className="border-destructive/50 rounded-2xl border bg-destructive/20 backdrop-blur-lg">
             <AccordionTrigger className="p-4 hover:no-underline">
               <div className="flex items-center gap-2 text-destructive">
                 <AlertTriangle className="h-5 w-5" />
@@ -68,7 +68,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-1 flex flex-col gap-8 p-6 rounded-lg bg-card/50">
+        <div className="md:col-span-1 flex flex-col gap-4 p-6 bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-3xl shadow-lg">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold">{location.name}</h2>
             <p className="text-muted-foreground">{location.region}, {location.country}</p>
@@ -89,15 +89,15 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
           </div>
         </div>
 
-        <div className="md:col-span-2 space-y-6">
+        <div className="md:col-span-2 space-y-6 bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-3xl shadow-lg p-6">
             <Tabs defaultValue="details" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="details">Details</TabsTrigger>
-              <TabsTrigger value="forecast">Forecast</TabsTrigger>
-              <TabsTrigger value="air-quality">Air Quality</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-black/10 dark:bg-white/10">
+              <TabsTrigger value="details" className="data-[state=active]:bg-white/20 dark:data-[state=active]:bg-black/20">Details</TabsTrigger>
+              <TabsTrigger value="forecast" className="data-[state=active]:bg-white/20 dark:data-[state=active]:bg-black/20">Forecast</TabsTrigger>
+              <TabsTrigger value="air-quality" className="data-[state=active]:bg-white/20 dark:data-[state=active]:bg-black/20">Air Quality</TabsTrigger>
             </TabsList>
             
-            <div className="p-6 rounded-lg bg-card/50">
+            <div className="rounded-lg">
               <TabsContent value="details" className="mt-0">
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
                   <div className="flex items-center gap-3">
@@ -148,7 +148,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
               <TabsContent value="forecast" className="mt-0">
                   <div className="space-y-4">
                     {forecast.forecastday.map((day, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-secondary/50">
+                      <div key={index} className="flex items-center justify-between p-3 rounded-xl bg-black/5 dark:bg-white/5">
                         <div className="flex items-center gap-4">
                           {day.day.condition.icon &&
                             <Image src={getIconSrc(day.day.condition.icon)} alt={day.day.condition.text} width={48} height={48} />
