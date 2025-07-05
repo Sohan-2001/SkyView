@@ -58,14 +58,15 @@ export default function Home() {
       return;
     }
 
+    setLoading(true);
     setError(null);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setLocation(''); // Clear city input field while fetching
         setSearchQuery(`${latitude},${longitude}`);
       },
       (err) => {
+        setLoading(false);
         setError(`Error: ${err.message}`);
       }
     );
