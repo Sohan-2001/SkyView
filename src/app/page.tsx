@@ -75,7 +75,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="w-full">
       <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8 pb-24">
         <div className="absolute top-4 right-4 z-50">
           <ThemeSwitcher />
