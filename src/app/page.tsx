@@ -76,11 +76,11 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8 pb-32">
+      <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8">
         <div className="absolute top-4 right-4 z-50">
           <ThemeSwitcher />
         </div>
-        <div className="w-full max-w-6xl">
+        <div className="w-full max-w-6xl pb-24">
           <div className="text-left">
             <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2 flex items-center justify-start gap-3">
               <CloudSun className="w-12 h-12" />
@@ -125,7 +125,7 @@ export default function Home() {
                           <Skeleton className="h-6 w-1/2 rounded-md bg-white/20" />
                       </div>
                        <div className="space-y-4">
-                          <Skeleton className="h-24 w-3/4 rounded-md bg-white/20" />
+                          <Skeleton className="h-12 w-3/4 rounded-md bg-white/20" />
                       </div>
                        <div className="flex items-center gap-4">
                           <Skeleton className="h-16 w-16 rounded-full bg-white/20" />
