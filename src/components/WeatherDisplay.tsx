@@ -89,7 +89,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
           </div>
         </div>
 
-        <div className="relative md:col-span-2 space-y-6 bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-3xl shadow-lg p-6">
+        <div className="md:col-span-2 space-y-6 bg-white/10 dark:bg-black/10 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-3xl shadow-lg p-6">
             <Tabs defaultValue="details" className="w-full">
             <TabsList className="grid w-full grid-cols-3 bg-black/10 dark:bg-white/10">
               <TabsTrigger value="details" className="data-[state=active]:bg-white/20 dark:data-[state=active]:bg-black/20">Details</TabsTrigger>
