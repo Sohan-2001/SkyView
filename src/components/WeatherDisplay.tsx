@@ -68,12 +68,12 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-1 flex flex-col justify-between p-6 rounded-lg bg-card/50 h-[400px]">
+        <div className="md:col-span-1 flex flex-col gap-8 p-6 rounded-lg bg-card/50">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold">{location.name}</h2>
             <p className="text-muted-foreground">{location.region}, {location.country}</p>
           </div>
-          <div className="my-8">
+          <div>
             <p className="text-6xl sm:text-7xl md:text-6xl lg:text-8xl font-bold text-primary">{Math.round(current.temp_c)}°C</p>
           </div>
           <div className="flex items-center gap-4">
@@ -164,7 +164,7 @@ export default function WeatherDisplay({ data }: WeatherDisplayProps) {
                                 <div className="flex items-center gap-1.5"><Sunset size={16}/> {day.astro.sunset.replace(/^0/, '')}</div>
                             </div>
                             <div className="text-right w-24">
-                                <p className="font-bold text-base sm:text-lg">{Math.round(day.day.maxtemp_c)}° / {Math.round(day.day.mintemp_c)}°</p>
+                                <p className="font-bold text-base sm:text-lg">{Math.round(day.day.maxtemp_c)} / {Math.round(day.day.mintemp_c)}°</p>
                             </div>
                         </div>
                       </div>

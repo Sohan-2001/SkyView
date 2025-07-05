@@ -118,12 +118,12 @@ export default function Home() {
           {loading && (
              <div className="w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="md:col-span-1 flex flex-col justify-between p-6 rounded-lg bg-card/50 h-[400px]">
+                  <div className="md:col-span-1 flex flex-col gap-8 p-6 rounded-lg bg-card/50">
                       <div className="space-y-4">
                           <Skeleton className="h-10 w-3/4 rounded-md" />
                           <Skeleton className="h-6 w-1/2 rounded-md" />
                       </div>
-                       <div className="space-y-4 my-8">
+                       <div className="space-y-4">
                           <Skeleton className="h-24 w-3/4 rounded-md" />
                       </div>
                        <div className="flex items-center gap-4">
