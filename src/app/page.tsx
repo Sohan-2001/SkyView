@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair } from 'lucide-react';
+import { Sun, Cloud, Snowflake, Zap, CloudDrizzle, Crosshair, CloudSun } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type ApiProvider = 'weatherapi' | 'weatherstack' | 'openweathermap';
@@ -83,7 +83,10 @@ export default function Home() {
         </div>
         <div className="w-full max-w-6xl">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2">SkyView</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2 flex items-center justify-center gap-3">
+              <CloudSun className="w-12 h-12" />
+              SkyView
+            </h1>
             <p className="text-lg text-foreground/90 drop-shadow-md mb-8">Your personal weather station</p>
           </div>
           
