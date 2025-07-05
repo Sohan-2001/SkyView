@@ -82,8 +82,8 @@ export default function Home() {
           <ThemeSwitcher />
         </div>
         <div className="w-full max-w-6xl">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2 flex items-center justify-center gap-3">
+          <div className="text-left">
+            <h1 className="text-4xl sm:text-5xl font-bold font-headline text-foreground drop-shadow-lg mb-2 flex items-center justify-start gap-3">
               <CloudSun className="w-12 h-12" />
               SkyView
             </h1>
